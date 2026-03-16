@@ -1,4 +1,4 @@
-# Analytics Engineer —   SaaS Metrics Assignment
+# Analytics Engineer —  SaaS Metrics Assignment
 **Author:** Samantha Aivazi | **Date:** March 2026
 
 ## Overview
