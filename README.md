@@ -23,8 +23,8 @@ ninox_project/
 ## Output Tables
 | File | Description |
 |------|-------------|
-| `fct_mrr_movements_clean.csv` | Monthly MRR movements by category |
-| `fct_mrr_cohort_retention_clean.csv` | Cohort retention by month number |
+| `fct_mrr_movements.csv` | Monthly MRR movements by category |
+| `fct_mrr_cohort_retention.csv` | Cohort retention by month number |
 
 ## How to Run
 ```bash
