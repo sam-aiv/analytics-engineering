@@ -1,0 +1,149 @@
+version: 2
+
+models:
+
+  - name: stg_orders
+    description: Cleaned and deduplicated orders with parsed checkout metadata.
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+
+      - name: subscription_id
+        tests:
+          - not_null
+          - unique
+
+      - name: order_date
+        tests:
+          - not_null
+
+      - name: gross_amount
+        tests:
+          - not_null
+
+  - name: stg_subscriptions
+    description: Cleaned subscription records from the raw source.
+    columns:
+      - name: subscription_id
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        tests:
+          - not_null
+
+
+  - name: int_subscription_revenue
+    description: Subscription-level revenue normalized to EUR and monthly MRR. Invalid records (missing dates, tax, exchange rates, etc.) are filtered here.
+    columns:
+      - name: subscription_id
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        tests:
+          - not_null
+
+      - name: net_revenue_eur
+        tests:
+          - not_null
+
+      - name: monthly_mrr_eur
+        tests:
+          - not_null
+
+
+  - name: int_subscription_months
+    description: One row per subscription per recognized MRR month.
+    columns:
+      - name: subscription_id
+        tests:
+          - not_null
+
+      - name: customer_id
+        tests:
+          - not_null
+
+      - name: month
+        tests:
+          - not_null
+
+      - name: monthly_mrr_eur
+        tests:
+          - not_null
+
+
+  - name: int_customer_month_mrr
+    description: Customer-month MRR at the reporting grain.
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+
+      - name: month
+        tests:
+          - not_null
+
+      - name: mrr_eur
+        tests:
+          - not_null
+
+
+  - name: fct_mrr_movements
+    description: Monthly MRR movement metrics across all customers.
+    columns:
+      - name: month
+        tests:
+          - not_null
+          - unique
+
+      - name: start_of_period_mrr
+        tests:
+          - not_null
+
+      - name: new_mrr
+        tests:
+          - not_null
+
+      - name: expansion_mrr
+        tests:
+          - not_null
+
+      - name: contraction_mrr
+        tests:
+          - not_null
+
+      - name: lost_mrr
+        tests:
+          - not_null
+
+      - name: end_of_period_mrr
+        tests:
+          - not_null
+
+
+  - name: fct_mrr_cohort_retention
+    description: Cohort retention based on the customer's first month generating MRR.
+    columns:
+      - name: cohort_month
+        tests:
+          - not_null
+
+      - name: month_number
+        tests:
+          - not_null
+
+      - name: retained_mrr_eur
+        tests:
+          - not_null
+
+      - name: cohort_mrr_month_0
+        tests:
+          - not_null
+
+      - name: retention_pct
+        tests:
+          - not_null
